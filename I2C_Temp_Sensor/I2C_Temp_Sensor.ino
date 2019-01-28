@@ -13,8 +13,6 @@
 
 ADB922S LoRa;
 
-uint8_t portTemp = 16;
-
 //================================
 //          Initialize Device Function
 //================================
@@ -45,7 +43,7 @@ void taskTemp(void)
 //    TASK( function, initial offset, interval by minute )
 //========================================
 TASK_LIST = {
-        TASK(taskTemp, 0, 0.1),
+        TASK(taskTemp, 0, 1),
         END_OF_TASK_LIST
 };
 
@@ -81,7 +79,6 @@ void getTemp(void)
   float temp = (float)ival / 16.0;
   char buf[6];
   DebugPrint(F("Temp=%s [C]\n"), dtostrf(temp,3, 2, buf));
-  Serial.println(temp);
 
 }
 /*   End of Program  */
