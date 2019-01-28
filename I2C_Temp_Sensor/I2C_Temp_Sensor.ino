@@ -14,7 +14,6 @@
 ADB922S LoRa;
 
 uint8_t portTemp = 16;
-int count = 0;
 
 //================================
 //          Initialize Device Function
@@ -39,7 +38,7 @@ void start()
 //========================================
 void taskTemp(void)
 {
-    sendTemp();
+    getTemp();
 }
 //========================================
 //            Execution interval
@@ -68,7 +67,7 @@ void wakeup(void)
 //================================
 // I2C ADT7410 Sensor Functions
 //================================
-void sendTemp(void)
+void getTemp(void)
 {
   Wire.requestFrom(0x48,2);
   uint16_t val = Wire.read() << 8;
@@ -84,7 +83,5 @@ void sendTemp(void)
   DebugPrint(F("Temp=%s [C]\n"), dtostrf(temp,3, 2, buf));
   Serial.println(temp);
 
-    Serial.println(count);
-    count++;
 }
 /*   End of Program  */
