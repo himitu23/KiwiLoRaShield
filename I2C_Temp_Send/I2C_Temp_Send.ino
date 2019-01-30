@@ -4,6 +4,7 @@
  *
  *   Copyright (c) 2017-2018  tomoaki@tomy-tech.com
  *   modified by himitu23 (@_tokina23)
+ *    for Visualizing Test with Microsoft Power BI
  *
  ***************************************************************/
 #include <KashiwaGeeks.h>
@@ -97,15 +98,19 @@ void getTemp(void)
     float temp = (float)ival / 16.0;
     char buf[6];
     DebugPrint(F("Temp=%s [C]\n"), dtostrf(temp,3, 2, buf));
-    //Serial.println(temp);
 
     //create payload
-    Payload pl(LoRa.getMaxPayloadSize());
-    pl.set_float(temp);
+    //Payload pl(LoRa.getMaxPayloadSize());
+    //pl.set_float(temp);
     
     //send data via LoRa Wireless
-    LoRa.sendPayloadConfirm(portTemp, ECHO, &pl);
-    
+    //LoRa.sendPayloadConfirm(portTemp, ECHO, &pl);
+
+    temp = (int)(temp * 100);
+    Serial.println(temp);
+    int result = LoRa.sendData(portTemp, ECHO,F("%04d"),(int)temp);
+    Serial.print("Error Code(0 is Sccess): ");
+    Serial.println(result);
  }
 
 /*   End of Program  */
